@@ -1,7 +1,7 @@
-package controllers.reports;
+package controllers.customers;
+
 
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -13,21 +13,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import models.Report;
-import models.validators.ReportValidator;
+import models.Customer;
+import models.validators.CustomerValidator;
 import utils.DBUtil;
 
 /**
- * Servlet implementation class ReportsUpdateServlet
+ * Servlet implementation class CustomersUpdateServlet
  */
-@WebServlet("/reports/update")
-public class ReportsUpdateServlet extends HttpServlet {
+@WebServlet("/customers/update")
+public class CustomersUpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ReportsUpdateServlet() {
+    public CustomersUpdateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -40,23 +40,27 @@ public class ReportsUpdateServlet extends HttpServlet {
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
 
-            Report r = em.find(Report.class, (Integer)(request.getSession().getAttribute("report_id")));
+            Customer c = em.find(Customer.class, (Integer)(request.getSession().getAttribute("customer_id")));
 
-            r.setReport_date(Date.valueOf(request.getParameter("report_date")));
-            r.setTitle(request.getParameter("title"));
-            r.setContent(request.getParameter("content"));
-            r.setNegotiation(request.getParameter("negotiation"));
-            r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+            c.setCompany(request.getParameter("company"));
+            c.setName(request.getParameter("name"));
+            String gender = request.getParameter("gender");
+            c.setGender(gender);
+            c.setEmail(request.getParameter("email"));
+            c.setPhone(request.getParameter("phone"));
+            c.setMemo(request.getParameter("memo"));
 
-            List<String> errors = ReportValidator.validate(r);
+            c.setUpdated_at(new Timestamp(System.currentTimeMillis()));
+
+            List<String> errors = CustomerValidator.validate(c);
             if(errors.size() > 0) {
                 em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
-                request.setAttribute("report", r);
+                request.setAttribute("customer", c);
                 request.setAttribute("errors", errors);
 
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/edit.jsp");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/customers/edit.jsp");
                 rd.forward(request, response);
             } else {
                 em.getTransaction().begin();
@@ -64,11 +68,10 @@ public class ReportsUpdateServlet extends HttpServlet {
                 em.close();
                 request.getSession().setAttribute("flush", "更新が完了しました。");
 
-                request.getSession().removeAttribute("report_id");
+                request.getSession().removeAttribute("customer_id");
 
-                response.sendRedirect(request.getContextPath() + "/reports/index");
+                response.sendRedirect(request.getContextPath() + "/customers/index");
             }
-
         }
     }
 

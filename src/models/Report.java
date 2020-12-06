@@ -55,6 +55,9 @@ public class Report {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @Column(name = "negotiation", nullable = false)
+    private String negotiation;
+
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
 
@@ -100,6 +103,15 @@ public class Report {
     public void setContent(String content) {
         this.content = content;
     }
+
+    public String getNegotiation() {
+        return negotiation;
+    }
+
+    public void setNegotiation(String negotiation) {
+        this.negotiation = negotiation;
+    }
+
 
     public Timestamp getCreated_at() {
         return created_at;

@@ -19,6 +19,11 @@ public class ReportValidator {
             errors.add(content_error);
         }
 
+        String negotiation_error = _validateNegotiation(r.getNegotiation());
+        if(!negotiation_error.equals("")) {
+            errors.add(negotiation_error);
+        }
+
         return errors;
     }
 
@@ -35,7 +40,13 @@ public class ReportValidator {
             return "内容を入力してください。";
             }
 
-    return"";
+        return "";
+    }
 
+    private static String _validateNegotiation(String negotiation) {
+        if(negotiation == null || negotiation.equals("")) {
+            return "商談状況を入力してください。";
+        }
+        return "";
     }
 }
