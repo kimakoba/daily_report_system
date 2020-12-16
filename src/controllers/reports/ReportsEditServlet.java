@@ -1,6 +1,7 @@
 package controllers.reports;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Customer;
 import models.Employee;
 import models.Report;
 import utils.DBUtil;
@@ -34,6 +36,11 @@ public class ReportsEditServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
+
+        // 顧客一覧を取得して、プルダウンを作成
+        List<Customer> customers = em.createNamedQuery("getAllCustomers", Customer.class)
+                .getResultList();
+        request.setAttribute("customers", customers);
 
         Report r = em.find(Report.class, Integer.parseInt(request.getParameter("id")));
 

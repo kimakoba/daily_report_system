@@ -26,6 +26,14 @@
 <textarea name="content" rows="10" cols="50">${report.content}</textarea>
 <br /><br />
 
+<label for="customer_id">顧客</label><br />
+<select name="customer_id">
+    <c:forEach var="customer" items="${customers}">
+        <option value="<c:out value='${customer.id}'/>"><c:out value="${customer.name}" /></option>
+    </c:forEach>
+</select>
+<br /><br />
+
 <label for="negotiation">商談状況</label><br />
 <textarea name="negotiation" rows="10" cols="50">${report.negotiation}</textarea>
 <br /><br />

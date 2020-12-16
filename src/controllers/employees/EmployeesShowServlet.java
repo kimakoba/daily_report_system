@@ -1,6 +1,7 @@
 package controllers.employees;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Employee;
+import models.Report;
 import utils.DBUtil;
 
 /**
@@ -35,10 +37,13 @@ public class EmployeesShowServlet extends HttpServlet {
         EntityManager em = DBUtil.createEntityManager();
 
         Employee e = em.find(Employee.class, Integer.parseInt(request.getParameter("id")));
+        List<Report> reports = em.createNamedQuery("getMyAllReports", Report.class).setParameter("employee", e)
+                                .getResultList();
 
         em.close();
 
         request.setAttribute("employee", e);
+        request.setAttribute("reports", reports);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/employees/show.jsp");
         rd.forward(request, response);

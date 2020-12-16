@@ -32,6 +32,10 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getMyReportsCount",
             query = "SELECT COUNT(r) FROM Report AS r WHERE r.employee = :employee"
+            ),
+    @NamedQuery(
+            name = "getMyTransaction",
+            query = "SELECT r FROM Report AS r WHERE r.customer = :customer ORDER BY r.id DESC"
             )
 })
 @Entity
@@ -55,6 +59,10 @@ public class Report {
     @Column(name = "content", nullable = false)
     private String content;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
     @Column(name = "negotiation", nullable = false)
     private String negotiation;
 
@@ -63,6 +71,7 @@ public class Report {
 
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
+
 
     public Integer getId() {
         return id;
@@ -104,6 +113,14 @@ public class Report {
         this.content = content;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public String getNegotiation() {
         return negotiation;
     }
@@ -128,7 +145,5 @@ public class Report {
     public void setUpdated_at(Timestamp updated_at) {
         this.updated_at = updated_at;
     }
-
-
 
 }

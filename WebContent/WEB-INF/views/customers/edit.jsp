@@ -4,7 +4,7 @@
     <c:param name="content">
         <c:choose>
             <c:when test="${customer != null}">
-                <h2>id : ${customer.id} の従業員情報　編集ページ</h2>
+                <h2>ID : ${customer.id} の従業員情報　編集ページ</h2>
 
                 <form method="POST" action="<c:url value='/customers/update' />">
                     <c:import url="_form.jsp" />

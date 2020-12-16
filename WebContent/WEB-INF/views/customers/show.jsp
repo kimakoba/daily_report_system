@@ -7,7 +7,7 @@
             <c:when test="${customer != null}">
                 <h2>id : ${customer.id} の顧客情報　詳細ページ</h2>
 
-                <table>
+                <table id="report_list">
                     <tbody>
                         <tr>
                             <th>会社名</th>
@@ -32,6 +32,27 @@
                          <tr>
                              <th>メモ</th>
                              <td><c:out value="${customer.memo}" /></td>
+                        </tr>
+                        <tr>
+                            <th>取引一覧</th>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <th>更新日</th>
+                                        <th>担当者</th>
+                                        <th>商談内容</th>
+                                        <th></th>
+                                    </tr>
+                                <c:forEach var="report" items="${reports}">
+                                        <tr>
+                                            <td><fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd" /></td>
+                                            <td><c:out value="${report.employee.name}" /></td>
+                                            <td><c:out value="${report.negotiation}" /></td>
+                                            <td class="report_action"><a href="<c:url value='/reports/show?id=${report.id}' />">詳細</a></td>
+                                        </tr>
+                                </c:forEach>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
                             <th>登録日時</th>

@@ -1,6 +1,7 @@
 package controllers.customers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import models.Customer;
+import models.Report;
 import utils.DBUtil;
 
 
@@ -37,9 +39,14 @@ public class CustomersShowServlet extends HttpServlet {
 
         Customer c = em.find(Customer.class, Integer.parseInt(request.getParameter("id")));
 
+        List<Report> reports = em.createNamedQuery("getMyTransaction", Report.class)
+                                .setParameter("customer", c)
+                                .getResultList();
+
         em.close();
 
         request.setAttribute("customer", c);
+        request.setAttribute("reports", reports);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/customers/show.jsp");
         rd.forward(request, response);

@@ -100,7 +100,10 @@ table#employee_list th {
     width: 30%;
     padding: 10px 2%;
 }
-
+table#employee_list tr {
+    width: 30%;
+    padding: 10px 2%;
+}
 table#employee_list td {
     width: 29%;
     padding: 10px 2%;
@@ -161,6 +164,9 @@ table#report_list .report_action {
     width: 13%;
 }
 
+table#report_list .reports{
+
+}
 pre {
     font-family: "Hiragino Kaku Gothic Pro",Meiryo,"MS PGothic",Helvetica,Arial,sans-serif;
 }

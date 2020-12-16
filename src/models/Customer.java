@@ -21,7 +21,7 @@ import javax.persistence.Table;
     @NamedQuery(
             name = "getCustomersCount",
             query = "SELECT COUNT(c) FROM Customer AS c"
-            ),
+            )
 })
 @Entity
 public class Customer {

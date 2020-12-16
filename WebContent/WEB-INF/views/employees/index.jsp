@@ -19,8 +19,8 @@
                     <tr class="row${status.count % 2}">
                         <td><c:out value="${employee.code}" /></td>
                         <td><c:out value="${employee.name}" /></td>
-                        <td>
-                            <c:choose>
+                    <td>
+                    <c:choose>
                                 <c:when test="${employee.delete_flag == 1}">
                                     （削除済み）
                                 </c:when>
@@ -28,8 +28,8 @@
                                     <a href="<c:url value='/employees/show?id=${employee.id}' />">詳細を表示</a>
                                 </c:otherwise>
                             </c:choose>
-                        </td>
-                    </tr>
+                    </td>
+                   </tr>
                 </c:forEach>
             </tbody>
         </table>

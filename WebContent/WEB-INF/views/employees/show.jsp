@@ -39,6 +39,27 @@
                                 <fmt:formatDate value="${employee.updated_at}" pattern="yyyy-MM-dd HH:mm:ss" />
                             </td>
                         </tr>
+                        <tr>
+                            <th>取引一覧</th>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <th>更新日</th>
+                                            <th>顧客名</th>
+                                            <th>商談内容</th>
+                                            <th></th>
+                                        </tr>
+                                        <c:forEach var="report" items="${reports}">
+                                        <tr>
+                                            <td><fmt:formatDate value="${report.updated_at}" pattern="yyyy-MM-dd" /></td>
+                                            <td><c:out value="${report.customer.name}" /></td>
+                                            <td><c:out value="${report.negotiation}" /></td>
+                                            <td><a href="<c:url value='/reports/show?id=${report.id}' />">詳細</a></td>
+                                        </tr>
+                                        </c:forEach>
+                                    </table>
+                                 </td>
+                        </tr>
                     </tbody>
                 </table>
 

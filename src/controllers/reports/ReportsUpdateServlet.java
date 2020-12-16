@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import models.Customer;
 import models.Report;
 import models.validators.ReportValidator;
 import utils.DBUtil;
@@ -45,6 +46,9 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setReport_date(Date.valueOf(request.getParameter("report_date")));
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
+            Integer customer_id= Integer.parseInt(request.getParameter("customer_id"));
+            Customer customer = em.find(Customer.class, customer_id);
+            r.setCustomer(customer);
             r.setNegotiation(request.getParameter("negotiation"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
@@ -54,6 +58,10 @@ public class ReportsUpdateServlet extends HttpServlet {
 
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("report", r);
+                // 顧客一覧を取得して、プルダウンを作成
+                List<Customer> customers = em.createNamedQuery("getAllCustomers", Customer.class)
+                        .getResultList();
+                request.setAttribute("customers", customers);
                 request.setAttribute("errors", errors);
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/reports/edit.jsp");
