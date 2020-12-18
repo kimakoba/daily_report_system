@@ -56,7 +56,7 @@ public class CustomersCreateServlet extends HttpServlet {
 
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/customers/new.jsp");
                 rd.forward(request, response);
-            } else {	// 全ての項目が入力されていた時
+            } else {	// 全ての項目が入力されていた場合
                 em.getTransaction().begin();
                 em.persist(c);
                 em.getTransaction().commit();

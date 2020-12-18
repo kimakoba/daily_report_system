@@ -36,7 +36,7 @@ public class Customer {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "gender", nullable = false, unique = true)
+    @Column(name = "gender", nullable = false)
     private String gender;
 
     @Column(name = "email", nullable = false)

@@ -54,13 +54,13 @@ public class ReportsUpdateServlet extends HttpServlet {
 
             List<String> errors = ReportValidator.validate(r);
             if(errors.size() > 0) {
-                em.close();
 
                 request.setAttribute("_token", request.getSession().getId());
                 request.setAttribute("report", r);
                 // 顧客一覧を取得して、プルダウンを作成
                 List<Customer> customers = em.createNamedQuery("getAllCustomers", Customer.class)
                         .getResultList();
+                em.close();
                 request.setAttribute("customers", customers);
                 request.setAttribute("errors", errors);
 
